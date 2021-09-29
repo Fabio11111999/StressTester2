@@ -27,5 +27,6 @@ To determine if the wrong solution will end up in a loop a time limit for its ex
 By default the number of testcases will be equal to `1000` and the time limit for the wrong code is set to `1s`, but it's possibile to change them by adding the flags `--testcases x --tl y` which will set the number of testcases equal to `x` and the time limit for the wrong solution equal to `y` (expressed in seconds).
 By default `wrong.cpp` is compiled using different sanitizers which slow down the compilation and execution processes but will provide information about an eventual crash, to disable them and make the testing process faster add the flag `--fast` to the command.
 
-<img width="1053" alt="Cattura" src="https://user-images.githubusercontent.com/39414882/135282228-bc4fbcb8-9f58-43b8-bacc-8a2e211dc0bb.PNG">
+
+<img width="1057" alt="Cattura" src="https://user-images.githubusercontent.com/39414882/135282718-2847c85c-761a-4c79-b5c7-210322ddbe40.PNG">
 
