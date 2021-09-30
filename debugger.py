@@ -17,7 +17,7 @@ class bcolors:
 
 def clear_files(files):
     for file in files:
-        os.system('rm ' + file)
+        os.system('rm -f ' + file)
         
 def compile_cpp(cpp, binary, safe=False, print_process=True):
     compilation_process = 1
@@ -155,22 +155,26 @@ def execute(test_cases, time_limit):
                 return
 
 if __name__ == '__main__':
-    clear_files(['-r results/'])
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--fast', help="does't use sanitiizers to compile the wrong solution", action='store_true')
-    parser.add_argument('--testcases', help='number of tested cases')
-    parser.add_argument('--tl', help='time limit for the execution of the wrong solution')
-    args = parser.parse_args()
-    testcases = (int(args.testcases) if args.testcases else 1000)
-    timelimit = (float(args.tl) if args.tl else 1)
-    os.system('clear')
-    print(bcolors.OKGREEN + bcolors.BOLD + ' Debugger Started\n' + bcolors.ENDC)
-    print(bcolors.OKBLUE + ' Number of testcases: ' + bcolors.ENDC + str(testcases) + '\t' + bcolors.OKBLUE + 'Time Limit: ' + bcolors.ENDC + str(timelimit) + 's\n') 
-    os.system('mkdir -p files')
-    print(bcolors.OKGREEN + ' Compilation Process: \n' + bcolors.ENDC)
-    compile_cpp('generator.cpp', 'gen', False)
-    compile_cpp('checker.cpp', 'checker', False)
-    compile_cpp('wrong.cpp', 'wrong', False if args.fast else True)
-    compile_cpp('correct.cpp', 'correct', False)
-    execute(testcases, timelimit)
-    clear_files(['log.txt'])
+    try:
+        clear_files(['-r results/'])
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--fast', help="does't use sanitiizers to compile the wrong solution", action='store_true')
+        parser.add_argument('--testcases', help='number of tested cases')
+        parser.add_argument('--tl', help='time limit for the execution of the wrong solution')
+        args = parser.parse_args()
+        testcases = (int(args.testcases) if args.testcases else 1000)
+        timelimit = (float(args.tl) if args.tl else 1)
+        os.system('clear')
+        print(bcolors.OKGREEN + bcolors.BOLD + ' Debugger Started\n' + bcolors.ENDC)
+        print(bcolors.OKBLUE + ' Number of testcases: ' + bcolors.ENDC + str(testcases) + '\t' + bcolors.OKBLUE + 'Time Limit: ' + bcolors.ENDC + str(timelimit) + 's\n') 
+        os.system('mkdir -p files')
+        print(bcolors.OKGREEN + ' Compilation Process: \n' + bcolors.ENDC)
+        compile_cpp('generator.cpp', 'gen', False)
+        compile_cpp('checker.cpp', 'checker', False)
+        compile_cpp('wrong.cpp', 'wrong', False if args.fast else True)
+        compile_cpp('correct.cpp', 'correct', False)
+        execute(testcases, timelimit)
+        clear_files(['log.txt'])
+    except KeyboardInterrupt:
+        print(bcolors.FAIL + 'Execution Stopped' + bcolors.ENDC)
+        clear_files(['log.txt', '-r results', 'wrong', 'gen', 'checker', 'correct', '-r files/'])
