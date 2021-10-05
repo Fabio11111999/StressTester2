@@ -21,8 +21,9 @@ def clear_files(files):
         
 def compile_cpp(cpp, binary, safe=False, print_process=True):
     compilation_process = 1
+    sym = bcolors.OKGREEN + u'\u2713' + bcolors.ENDC if safe == True else bcolors.FAIL + 'X' + bcolors.ENDC
     if print_process == True:
-        print('\tCompiling '  + cpp + ' (safe=' + str(safe) + '):', end=' ', flush = True)
+        print('\tCompiling '  + cpp + ' ' * (20 - len(cpp)) + 'safe = ' + sym + ':', end=' ', flush = True)
     if safe:
         compilation_process = subprocess.run(
             ['g++', '-std=c++17', '-Wshadow', '-Wall', '-o', binary, cpp, '-g', '-fsanitize=address','-fsanitize=undefined', '-D_GLIBCXX_DEBUG'],
@@ -38,7 +39,7 @@ def compile_cpp(cpp, binary, safe=False, print_process=True):
             print(compilation_process.stderr)
         exit(1)
     if print_process == True:
-        print(' ' * (15 - len(cpp)), bcolors.OKGREEN + '\tComiplation completed. \n' + bcolors.ENDC, flush=True)
+        print(' ' * (15 - len(cpp)), bcolors.OKGREEN + '\tCompilation completed. \n' + bcolors.ENDC, flush=True)
 
 
 bars = []

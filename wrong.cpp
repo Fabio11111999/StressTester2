@@ -11,7 +11,7 @@ int main() {
 	sort(v.begin(), v.end());
 	srand(time(NULL));
 	int toss = rand() % 10;
-	if (toss < 2) { 		
+	if (toss < 0) { 		
 		swap(v[0], v[N - 1]);
 	}
 	for (int i = 0;i < N; i++) { 

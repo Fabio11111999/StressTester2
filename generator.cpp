@@ -12,6 +12,7 @@ int main(int argc, char **argv) {
 	int seed = atoi(argv[1]);
 	my_rand.seed(seed);
 	int N = rand(10, 10000);
+	N = 10000;
 	cout << N << endl;
 	for (int i = 0; i < N; i++) {
 		cout << rand(1, 1000);
