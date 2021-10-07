@@ -21,8 +21,8 @@ def clear_files(files):
         
 def compile_cpp(cpp, binary, safe=False, print_process=True):
     compilation_process = 1
-    sym = bcolors.OKGREEN + u'\u2713' + bcolors.ENDC if safe == True else bcolors.FAIL + 'X' + bcolors.ENDC
-    if print_process == True:
+    sym = bcolors.OKGREEN + u'\u2713' + bcolors.ENDC if safe is True else bcolors.FAIL + 'X' + bcolors.ENDC
+    if print_process is True:
         print('\tCompiling '  + cpp + ' ' * (20 - len(cpp)) + 'safe = ' + sym + ':', end=' ', flush = True)
     if safe:
         compilation_process = subprocess.run(
@@ -34,11 +34,11 @@ def compile_cpp(cpp, binary, safe=False, print_process=True):
             capture_output=True,
             text=True)
     if compilation_process.returncode != 0:
-        if print_process == True:
+        if print_process is True:
             print(bcolors.FAIL + '\tCompilation failed. \n' + bcolors.ENDC)
             print(compilation_process.stderr)
         exit(1)
-    if print_process == True:
+    if print_process is True:
         print(' ' * (15 - len(cpp)), bcolors.OKGREEN + '\tCompilation completed. \n' + bcolors.ENDC, flush=True)
 
 
@@ -57,7 +57,7 @@ def worker(name, test_cases, time_limit, done):
     current_folder = 'files/worker' + str(name) + '/'
     os.system('mkdir -p ' + current_folder)
     os.system('cp -t ' + current_folder + ' gen checker wrong correct')
-    for t in range(test_cases):
+    for _ in range(test_cases):
         global bars
         bars[name].update(1)
         # If a counter example has already been founded stop here
@@ -97,11 +97,11 @@ def worker(name, test_cases, time_limit, done):
                 done.set()
                 return 2
         except subprocess.TimeoutExpired:
-                done.set()
-                os.system('mkdir -p results')
-                os.system('cp ' + current_folder + 'input.txt results/')
-                os.system('cp ' + current_folder + 'correct_output.txt results/')
-                return 3
+            done.set()
+            os.system('mkdir -p results')
+            os.system('cp ' + current_folder + 'input.txt results/')
+            os.system('cp ' + current_folder + 'correct_output.txt results/')
+            return 3
         # Run checker
         check_execution = subprocess.run([current_folder + 'checker', current_folder + 'correct_output.txt', current_folder + 'wrong_output.txt'])
         if check_execution.returncode != 0:
